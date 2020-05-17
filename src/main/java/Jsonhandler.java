@@ -61,7 +61,7 @@ public class Jsonhandler
                 while (cellIterator.hasNext()) {
                     Cell cell = cellIterator.next();
                     String cellValue = dataFormatter.formatCellValue(cell);
-                    values.add(cellValue);
+                    values.add(cellValue.trim());
                     System.out.print(cellValue + "\t\t");
                 }
 
