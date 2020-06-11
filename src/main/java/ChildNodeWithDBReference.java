@@ -3,7 +3,15 @@ public class ChildNodeWithDBReference {
     GroupCreationRequest request;
     String childDbRef;
     String currentNodeDbRef;
+    String rootId;
 
+    public String getRootId() {
+        return rootId;
+    }
+
+    public void setRootId(String rootId) {
+        this.rootId = rootId;
+    }
 
     public ChildNodeWithDBReference()
     {
@@ -40,4 +48,5 @@ public class ChildNodeWithDBReference {
     public void setCurrentNodeDbRef(String currentNodeDbRef) {
         this.currentNodeDbRef = currentNodeDbRef;
     }
+
 }

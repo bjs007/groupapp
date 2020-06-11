@@ -7,6 +7,7 @@ public class Group
     private String hinName;
     private String engDesc;
     private String hinDesc;
+    private String rootId;
     private String id;
     private String createdBy;
     private String date;
@@ -16,6 +17,13 @@ public class Group
     private String parentId;
     private List<String> childrenIds;
 
+    public String getRootId() {
+        return rootId;
+    }
+
+    public void setRootId(String rootId) {
+        this.rootId = rootId;
+    }
 
     public Group()
     {

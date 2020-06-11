@@ -44,6 +44,8 @@ public class Jsonhandler
 
             System.out.println("------------------------------  <FILE LOADING STARTED>  ----------------------------------");
 
+            boolean root = true;
+
             while (rowIterator.hasNext()) {
                 Row row = rowIterator.next();
 
@@ -65,8 +67,14 @@ public class Jsonhandler
                     System.out.print(cellValue + "\t\t");
                 }
 
+                GroupCreationRequest groupCreationRequest = null;
 
-                GroupCreationRequest groupCreationRequest = new GroupCreationRequest(values.get(1) , values.get(2)  ,values.get(3) ,values.get(4) );
+                if(root)
+                    groupCreationRequest   = new GroupCreationRequest(values.get(1) , values.get(2)  ,values.get(3) ,values.get(4) );
+                else
+                    groupCreationRequest   = new GroupCreationRequest(values.get(1) + " * " + groupCreationRequests.get(0).getGroupNameInEng() , values.get(2)  ,values.get(3) + " * " + groupCreationRequests.get(0).getGroupNameInHin(), values.get(4) );
+
+                root = false;
                 groupCreationRequests.add(groupCreationRequest);
                 System.out.println();
             }

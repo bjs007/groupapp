@@ -68,8 +68,12 @@ public class ParentCreation implements Runnable {
 
                        if (level == 0) {
                            requiredNodeAtCurrentLevel.setParentId("root");
+                           requiredNodeAtCurrentLevel.setRootId(groupId);
+                           groupPathWithName.get(level).setRootId(groupId);
                        } else {
                            requiredNodeAtCurrentLevel.setParentId(groupPathWithName.get(level - 1).getCurrentNodeDbRef());
+                           requiredNodeAtCurrentLevel.setRootId(groupPathWithName.get(level - 1).getRootId());
+                           groupPathWithName.get(level).setRootId(groupPathWithName.get(level - 1).getRootId());
                        }
                    }
 
@@ -164,8 +168,11 @@ public class ParentCreation implements Runnable {
 
                        if (level == 0) {
                            requiredNodeAtCurrentLevel.setParentId("root");
+                           groupPathWithName.get(level).setRootId(groupId);
                        } else {
                            requiredNodeAtCurrentLevel.setParentId(groupPathWithName.get(level - 1).getCurrentNodeDbRef());
+                           requiredNodeAtCurrentLevel.setRootId(groupPathWithName.get(level - 1).getRootId());
+                           groupPathWithName.get(level).setRootId(groupPathWithName.get(level - 1).getRootId());
                        }
                    }
 
@@ -175,6 +182,7 @@ public class ParentCreation implements Runnable {
 
                    if(level == 0)
                    {
+
                        updatedNodeAtCurrentLevelDetail.put(currentLevel + "/" + requiredNodeAtCurrentLevel.getId() + "/",
                                requiredNodeAtCurrentLevel);
                    }
