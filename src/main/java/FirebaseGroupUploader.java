@@ -9,7 +9,7 @@ public class FirebaseGroupUploader
         List<GroupCreationRequest>  groupCreationRequests = jsonhandler.getGrups("/Users/bijaysharma/Desktop/group.xlsx");
         if(groupCreationRequests == null || groupCreationRequests.size() == 0)
         {
-            System.out.println("There is no group in the csv file");
+            System.out.println("There is no group in the csv file. Please check group.xlx file");
         }
 
         createGroup(groupCreationRequests);
