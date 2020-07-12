@@ -16,7 +16,7 @@ public class ParentCreation implements Runnable {
     CountDownLatch cl;
 
     public ParentCreation(List<ChildNodeWithDBReference> childNodeWithDBReferences, CountDownLatch cl) {
-        firebaseDatabase = getFirebaseAccess();
+        firebaseDatabase = getFirebaseAccess().child("Groups");
         this.childNodeWithDBReferences = childNodeWithDBReferences;
         this.cl = cl;
     }
@@ -268,19 +268,18 @@ public class ParentCreation implements Runnable {
     private DatabaseReference getFirebaseAccess() {
         DatabaseReference ref = null;
         try {
-            FileInputStream serviceAccount = new FileInputStream("/Users/bijaysharma/Desktop/frienders-a1fdb-firebase-adminsdk.json");
+            FileInputStream serviceAccount = new FileInputStream("/Users/bijaysharma/Desktop/frienders-46611-firebase-adminsdk-m6msi-5332347cdd.json");
 
 // Initialize the app with a service account, granting admin privileges
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://frienders-a1fdb.firebaseio.com/")
+                    .setDatabaseUrl("https://frienders-46611.firebaseio.com/")
                     .build();
             FirebaseApp.initializeApp(options);
 
 
 // As an admin, the app has access to read and write all data, regardless of Security Rules
-             ref = FirebaseDatabase.getInstance()
-                    .getReference("Groups");
+             ref = FirebaseDatabase.getInstance().getReference();
 //
         } catch (Exception ex) {
         }
