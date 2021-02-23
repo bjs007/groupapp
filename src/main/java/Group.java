@@ -7,6 +7,8 @@ public class Group
     private String hinName;
     private String engDesc;
     private String hinDesc;
+    private String engDetail;
+    private String hinDetail;
     private String rootId;
     private String id;
     private String createdBy;
@@ -150,5 +152,21 @@ public class Group
 
     public void setHinDesc(String hinDesc) {
         this.hinDesc = hinDesc;
+    }
+
+    public String getEngDetail() {
+        return engDetail;
+    }
+
+    public void setEngDetail(String engDetail) {
+        this.engDetail = engDetail;
+    }
+
+    public String getHinDetail() {
+        return hinDetail;
+    }
+
+    public void setHinDetail(String hinDetail) {
+        this.hinDetail = hinDetail;
     }
 }

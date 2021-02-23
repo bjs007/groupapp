@@ -12,6 +12,7 @@ public class Jsonhandler
 {
     private static Jsonhandler jsonhandler = null;
     private List<GroupCreationRequest> groupCreationRequests = new ArrayList<>();
+    private List<List<GroupCreationRequest>> allGroups = new ArrayList<>();
 
     public static Jsonhandler getJsonhandler() {
         if(jsonhandler == null)
@@ -22,10 +23,11 @@ public class Jsonhandler
         return jsonhandler;
     }
 
-    public List<GroupCreationRequest> getGrups(String filepath)
+    public List<List<GroupCreationRequest>> getGrups(String filepath)
     {
         String line = "";
         String splitBy = ",";
+        int depth = 3;
         try
         {
 
@@ -70,9 +72,9 @@ public class Jsonhandler
                 GroupCreationRequest groupCreationRequest = null;
 
                 if(root)
-                    groupCreationRequest   = new GroupCreationRequest(values.get(1) , values.get(2)  ,values.get(3) ,values.get(4) );
+                    groupCreationRequest   = new GroupCreationRequest(values.get(0) , values.get(1)  ,values.get(3) ,values.get(4));
                 else
-                    groupCreationRequest   = new GroupCreationRequest(values.get(1) + " * " + groupCreationRequests.get(0).getGroupNameInEng() , values.get(2)  ,values.get(3) + " * " + groupCreationRequests.get(0).getGroupNameInHin(), values.get(4) );
+                    groupCreationRequest   = new GroupCreationRequest(values.get(0) + " * " + groupCreationRequests.get(0).getGroupNameInEng() , values.get(1)  ,values.get(2), values.get(3) + " * " + groupCreationRequests.get(0).getGroupNameInHin(), values.get(4), values.get(5) );
 
                 root = false;
                 groupCreationRequests.add(groupCreationRequest);
@@ -87,11 +89,33 @@ public class Jsonhandler
                 System.out.println("LEVEL : " + i);
                 System.out.println("ENG NAME : " + groupCreationRequest.getGroupNameInEng()
                 +"\nENG DESC : " + groupCreationRequest.getGroupDescInEng()
+                        +"\nENG DETAIL : " + groupCreationRequest.getGroupDetailInEng()
                 +"\nHINDI NAME: " + groupCreationRequest.getGroupNameInHin()
-                +"\nHINDI DESC : " + groupCreationRequest.getGroupDescInHin());
+                +"\nHINDI DESC : " + groupCreationRequest.getGroupDescInHin()
+                        +"\nHINDI DETAIL : " + groupCreationRequest.getGroupDetailInHin());
                 i++;
                 System.out.println("\n\n");
             }
+
+            boolean isrootUsed = false;
+           for(int k = 0; k < groupCreationRequests.size();) {
+               List<GroupCreationRequest> temp = new ArrayList<>();
+
+               if(!isrootUsed) {
+                   for(int d = 0; d < depth; d++){
+                       temp.add(groupCreationRequests.get(d));
+                       k++;
+                   }
+                   isrootUsed = true;
+               }else {
+                   for(int d = 0; d < depth - 1; d++){
+                       temp.add(groupCreationRequests.get(d));
+                   }
+                   temp.add(groupCreationRequests.get(k));
+                   k++;
+               }
+               allGroups.add(temp);
+           }
 
             System.out.println("------------------------------  <GROUP CREATION ENDED>  ----------------------------------");
 
@@ -101,7 +125,7 @@ public class Jsonhandler
             e.printStackTrace();
         }
 
-        return groupCreationRequests;
+        return allGroups;
     }
 
 }

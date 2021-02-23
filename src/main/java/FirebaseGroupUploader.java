@@ -10,7 +10,7 @@ public class FirebaseGroupUploader
 
 
         Jsonhandler jsonhandler = Jsonhandler.getJsonhandler();
-        List<GroupCreationRequest>  groupCreationRequests = jsonhandler.getGrups("/Users/bijaysharma/Desktop/group.xlsx");
+        List<List<GroupCreationRequest> > groupCreationRequests = jsonhandler.getGrups("/Users/bijaysharma/Desktop/Group.xlsx");
         if(groupCreationRequests == null || groupCreationRequests.size() == 0)
         {
             System.out.println("There is no group in the csv file");
@@ -20,20 +20,27 @@ public class FirebaseGroupUploader
 
     }
 
-    private static void createGroup(List<GroupCreationRequest> groupRequest) throws InterruptedException {
+    private static void createGroup(List<List<GroupCreationRequest>> allGroups) throws InterruptedException {
 
-        final List<ChildNodeWithDBReference> list = new ArrayList();
 
-        for (final GroupCreationRequest dbNode : groupRequest) {
 
-            list.add(new ChildNodeWithDBReference(dbNode, null, null));
+
+        for(List<GroupCreationRequest> groupCreationRequests : allGroups){
+
+            CountDownLatch cl = new CountDownLatch(1);
+            final List<ChildNodeWithDBReference> list = new ArrayList();
+            for (final GroupCreationRequest dbNode : groupCreationRequests) {
+
+                list.add(new ChildNodeWithDBReference(dbNode, null, null));
+            }
+
+
+            Thread t1 = new Thread(new ParentCreation(list, cl));
+            t1.start();
+            cl.await();
         }
 
-        CountDownLatch cl = new CountDownLatch(1);
 
-        Thread t1 = new Thread(new ParentCreation(list, cl));
-        t1.start();
-        cl.await();
     }
 
 

@@ -3,7 +3,6 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.database.*;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
@@ -11,11 +10,12 @@ import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 public class ParentCreation implements Runnable {
-    private DatabaseReference firebaseDatabase;
+    private static DatabaseReference firebaseDatabase;
     List<ChildNodeWithDBReference> childNodeWithDBReferences;
     CountDownLatch cl;
 
     public ParentCreation(List<ChildNodeWithDBReference> childNodeWithDBReferences, CountDownLatch cl) {
+        if(firebaseDatabase ==null)
         firebaseDatabase = getFirebaseAccess().child("Groups");
         this.childNodeWithDBReferences = childNodeWithDBReferences;
         this.cl = cl;
@@ -268,7 +268,7 @@ public class ParentCreation implements Runnable {
     private DatabaseReference getFirebaseAccess() {
         DatabaseReference ref = null;
         try {
-            FileInputStream serviceAccount = new FileInputStream("/Users/bijaysharma/Desktop/frienders-46611-firebase-adminsdk-m6msi-5332347cdd.json");
+            FileInputStream serviceAccount = new FileInputStream("/Users/bijaysharma/Desktop/frienders-46611-bf60a660bc50.json");
 
 // Initialize the app with a service account, granting admin privileges
             FirebaseOptions options = new FirebaseOptions.Builder()
