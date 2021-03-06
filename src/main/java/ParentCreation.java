@@ -13,11 +13,13 @@ public class ParentCreation implements Runnable {
     private static DatabaseReference firebaseDatabase;
     List<ChildNodeWithDBReference> childNodeWithDBReferences;
     CountDownLatch cl;
+    LinkedHashMap<String, String> groupIds = new LinkedHashMap<>();
 
-    public ParentCreation(List<ChildNodeWithDBReference> childNodeWithDBReferences, CountDownLatch cl) {
+    public ParentCreation(List<ChildNodeWithDBReference> childNodeWithDBReferences, CountDownLatch cl, LinkedHashMap<String, String> groupIds ) {
         if(firebaseDatabase ==null)
         firebaseDatabase = getFirebaseAccess().child("Groups");
         this.childNodeWithDBReferences = childNodeWithDBReferences;
+        this.groupIds = groupIds;
         this.cl = cl;
     }
 
@@ -243,6 +245,9 @@ public class ParentCreation implements Runnable {
     private Group createGroup(GroupCreationRequest request, String id, int level, boolean isLeaf) {
 
         String currentUser = "admin";
+        if(!groupIds.containsKey(request.getGroupNameInEng())){
+            groupIds.put(request.getGroupNameInEng(), id);
+        }
         Group grp = new Group(request.getGroupNameInEng(), id, currentUser, getCurrentDate(), getCurrentTime(), isLeaf, level, new ArrayList<String>());
         grp.setEngDesc(request.getGroupDescInEng());
         grp.setHinName(request.getGroupNameInHin());

@@ -1,7 +1,7 @@
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 import java.util.concurrent.CountDownLatch;
 
 public class FirebaseGroupUploader
@@ -23,8 +23,7 @@ public class FirebaseGroupUploader
     private static void createGroup(List<List<GroupCreationRequest>> allGroups) throws InterruptedException {
 
 
-
-
+        LinkedHashMap<String, String> groupIds = new LinkedHashMap<>();
         for(List<GroupCreationRequest> groupCreationRequests : allGroups){
 
             CountDownLatch cl = new CountDownLatch(1);
@@ -35,9 +34,25 @@ public class FirebaseGroupUploader
             }
 
 
-            Thread t1 = new Thread(new ParentCreation(list, cl));
+            Thread t1 = new Thread(new ParentCreation(list, cl, groupIds));
             t1.start();
             cl.await();
+        }
+
+        File outputFile = new File("/Users/bijaysharma/Desktop/output.txt");
+        try {
+            FileOutputStream fos = new FileOutputStream(outputFile);
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(fos));
+            Iterator iterator = groupIds.entrySet().iterator();
+            while (iterator.hasNext()){
+                Map.Entry<String,String> entry = (Map.Entry<String, String>) iterator.next();
+                bw.write(entry.getValue());
+                bw.newLine();
+            }
+            bw.close();
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 

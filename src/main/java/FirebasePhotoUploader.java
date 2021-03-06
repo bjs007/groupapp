@@ -36,8 +36,8 @@ public class FirebasePhotoUploader {
 
 //            Bucket bucket = StorageClient.getInstance().bucket();
 
-            InputStream file = new FileInputStream("/Users/bijaysharma/Desktop/firestore/2.png");
-            Blob blob = StorageClient.getInstance().bucket().create("Groups_image/fileName", file, "image/jpeg");
+            InputStream file = new FileInputStream("/Users/bijaysharma/Desktop/firestore/amublance.png");
+            Blob blob = StorageClient.getInstance().bucket().create("Groups_image/-MPT6nfRl5Z1XtoXm8-L.jpeg", file, "image/jpeg");
 
 //            BlobId blobId = BlobId.of("frienders-46611.appspot.com", "fileName");
 //            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
