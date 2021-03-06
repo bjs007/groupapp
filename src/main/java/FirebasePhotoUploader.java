@@ -11,8 +11,7 @@ import com.google.firebase.cloud.StorageClient;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.io.FileInputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -36,8 +35,26 @@ public class FirebasePhotoUploader {
 
 //            Bucket bucket = StorageClient.getInstance().bucket();
 
-            InputStream file = new FileInputStream("/Users/bijaysharma/Desktop/firestore/amublance.png");
-            Blob blob = StorageClient.getInstance().bucket().create("Groups_image/-MPT6nfRl5Z1XtoXm8-L.jpeg", file, "image/jpeg");
+            try {
+                File groupNameAndImageId =new File("/Users/bijaysharma/Desktop/output.txt");    //creates a new file instance
+                FileReader fr=new FileReader(groupNameAndImageId);   //reads the file
+                BufferedReader br=new BufferedReader(fr);
+                String line;
+                int i = 1;
+                while((line=br.readLine())!=null)
+                {
+                    InputStream file = new FileInputStream("/Users/bijaysharma/Desktop/firestore/" +i +".png");
+                    Blob blob = StorageClient.getInstance().bucket().create("Groups_image/" + line+".jpeg", file, "image/jpeg");
+                    i++;
+                }
+
+
+
+            }catch (Exception e){
+
+            }
+
+
 
 //            BlobId blobId = BlobId.of("frienders-46611.appspot.com", "fileName");
 //            BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();

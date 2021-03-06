@@ -27,7 +27,7 @@ public class Jsonhandler
     {
         String line = "";
         String splitBy = ",";
-        int depth = 3;
+        int depth = 2;
         try
         {
 

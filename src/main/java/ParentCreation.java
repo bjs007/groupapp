@@ -56,6 +56,7 @@ public class ParentCreation implements Runnable {
 
                        if (group != null && existingName.equalsIgnoreCase(newGroupName)) {
                            requiredNodeAtCurrentLevel = group;
+                           groupIds.put(group.getEngName(), group.getId());
                            if(level == groupPathWithName.size() - 1)
                                System.out.println("WARNING DUPLICATE GROUP");
                            break;
@@ -156,6 +157,7 @@ public class ParentCreation implements Runnable {
 
                        if (group != null && existingName.equalsIgnoreCase(newGroupName)) {
                            requiredNodeAtCurrentLevel = group;
+                           groupIds.put(group.getEngName(), group.getId());
                            if(level == groupPathWithName.size() - 1)
                                System.out.println("\n\n\n---------------------------------------WARNING DUPLICATE GROUP---------------------------");
                            break;
